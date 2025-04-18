@@ -1,20 +1,18 @@
 <?php
 
-
 namespace Dcodegroup\LaravelChat;
-
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelChatServiceProvider extends ServiceProvider
 {
-        public function boot(): void
-        {
-            $this->offerPublishing();
-            $this->registerRoutes();
-            $this->loadTranslationsFrom(__DIR__.'/../lang', 'activity-log-translations');
-        }
+    public function boot(): void
+    {
+        $this->offerPublishing();
+        $this->registerRoutes();
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'activity-log-translations');
+    }
 
     protected function setupMigrations()
     {
