@@ -1,0 +1,63 @@
+{
+    "name": "dcodegroup/larvel-chat",
+    "description": "Package to add chat functionality to your Laravel application",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "chat",
+        "messaging"
+    ],
+    "authors": [
+        {
+            "name": "Nathan Rzepecki",
+            "email": "nathan@lionslair.net.au",
+            "homepage": "https://nathanrzepecki.me",
+            "role": "Developer"
+        },
+        {
+            "name": "Dcode Group",
+            "email": "forge@dcodegroup.com",
+            "homepage": "https://dcodegroup.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^10.2|^11.0|^12.0",
+        "illuminate/support": "^10.2|^11.0|^12.0",
+        "nesbot/carbon": "^2.72|^3.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.42",
+        "larastan/larastan": "^2.9",
+        "laravel/pint": "^1.13",
+        "orchestra/testbench": "^8.21",
+        "phpstan/phpstan-deprecation-rules": "^1.1",
+        "phpstan/phpstan-phpunit": "^1.3",
+        "spatie/laravel-log-dumper": "^1.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Dcodegroup\\LaravelChat\\": "src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dcodegroup\\LaravelChat\\LaravelChatServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "format": "vendor/bin/pint"
+    }
+}

@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "11:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "11:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
