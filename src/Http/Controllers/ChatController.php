@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Dcodegroup\LaravelChat\Http\Controllers;
 
+use Illuminate\Routing\Controller;
 
-class ChatController {
-
-}
+class ChatController extends Controller {}
