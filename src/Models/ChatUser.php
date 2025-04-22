@@ -1,0 +1,40 @@
+<?php
+
+namespace Dcodegroup\LaravelChat\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class ChatUser extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = [
+        'chat_id',
+        'user_id',
+        'user_name',
+        'user_avatar',
+        'chat_title',
+        'chat_description',
+        'chat_avatar',
+        'chat_avatar',
+        'last_read_at',
+        'has_new_messages',
+    ];
+
+    protected $casts = [
+        'last_read_at' => 'datetime',
+        'has_new_messages' => 'boolean',
+    ];
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(config('laravel-chat.user_model'));
+    }
+}
