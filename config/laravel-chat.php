@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use Dcodegroup\LaravelChat\Models\Chat;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +43,7 @@ return [
     */
 
     'binding' => env('LARAVEL_CHAT_MODEL_BINDING', 'laravel-chat'),
-    'laravel_chat_model' => \Dcodegroup\LaravelChat\Models\Chat::class,
+    'laravel_chat_model' => Chat::class,
 
     /*
      |--------------------------------------------------------------------------
@@ -63,7 +66,7 @@ return [
      | eg 'User'
     */
 
-    'user_model' => null,
+    'user_model' => User::class,
     'user_table' => env('LARAVEL_CHAT_USERS_TABLE', 'users'),
     'user_id_field_type' => env('LARAVEL_CHAT_USERS_ID_FIELD_TYPE', 'unsignedBigInteger'),
 
