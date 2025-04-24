@@ -5,7 +5,14 @@ export default {
 </script>
 
 <template>
-
+  <div>
+    <div class="laravel-chat__search">
+      <LaravelChatSearch/>
+    </div>
+    <div class="laravel-chat__participants">
+      <LaravelChatParticipant/>
+    </div>
+  </div>
 </template>
 
 <style scoped>
