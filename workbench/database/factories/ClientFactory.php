@@ -1,9 +1,5 @@
 <?php
 
-
 namespace Database\Factories;
 
-
-class ClientFactory {
-
-}
+class ClientFactory {}
