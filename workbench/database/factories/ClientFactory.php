@@ -1,9 +1,20 @@
 <?php
 
-
 namespace Database\Factories;
 
+use App\Models\Client;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ClientFactory {
-
+/**
+ * @extends Factory<Client>
+ */
+class ClientFactory
+{
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'description' => fake()->text(),
+        ];
+    }
 }
