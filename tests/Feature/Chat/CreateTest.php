@@ -1,7 +1,5 @@
 <?php
 
-
-
 test('if relation not found for chat it makes a new one', function () {
 
     $this->assertDatabaseMissing('chats', [
