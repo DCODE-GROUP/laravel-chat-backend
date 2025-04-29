@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcodegroup\LaravelChat;
+namespace Dcodegroup\LaravelChat\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Orchestra\Testbench\Attributes\WithEnv;
@@ -23,15 +23,15 @@ abstract class TestCase extends Orchestra
         //            fn (string $modelName) => 'Spatie\\QueryBuilder\\Database\\Factories\\'.class_basename($modelName).'Factory'
         //        );
 
-        $this->setUpDatabase();
+        //        $this->setUpDatabase();
     }
 
-    protected function setUpDatabase()
-    {
-        $chatTableMigration = require __DIR__.'/../database/migrations/create_chat_tables.php.stub';
-
-        $chatTableMigration->up();
-    }
+    //    protected function setUpDatabase()
+    //    {
+    //        $chatTableMigration = require __DIR__.'/../database/migrations/create_chat_tables.php.stub';
+    //
+    //        $chatTableMigration->up();
+    //    }
 
     protected function defineDatabaseMigrations()
     {
