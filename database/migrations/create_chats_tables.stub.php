@@ -14,13 +14,13 @@ return new class extends Migration
             $table->boolean('open')
                 ->default(true);
             $table
-                ->{config('laravel-chat.users.user_id_field_type')}('created_by')
+                ->{config('laravel-chat.user_id_field_type')}('created_by')
                 ->nullable();
             $table->foreign('created_by')
                 ->references('id')
                 ->on(config('laravel-chat.user_table'));
             $table
-                ->{config('laravel-chat.users.user_id_field_type')}('updated_by')
+                ->{config('laravel-chat.user_id_field_type')}('updated_by')
                 ->nullable();
             $table->foreignIdFor('updated_by')
                 ->references('id')

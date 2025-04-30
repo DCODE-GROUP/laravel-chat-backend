@@ -1,17 +1,17 @@
 <?php
 
+use App\Models\User;
+
+use function Pest\Laravel\actingAs;
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+});
+
 test('if relation not found for chat it makes a new one', function () {
 
-    $this->assertDatabaseMissing('chats', [
-        'chatable_id' => 1,
-        'chatable_type' => 'App\Models\Transport',
-    ]);
+    $this->assertDatabaseEmpty('chats');
 
-    $user = \Dcodegroup\LaravelChat\Models\User::factory()->create();
-    $user2 = \Dcodegroup\LaravelChat\Models\User::factory()->create();
+    actingAs($this->user)->get(route(config('laravel-chat.route_name').'.create'))->assertRedirectToRoute(config('laravel-chat.route_name').'.chats.show', 1);
 
-    $chat = $user->chat($user2);
-
-    expect($chat)->toBeInstanceOf(\Dcodegroup\LaravelChat\Models\Chat::class);
-})->skip(fn() => !class_exists('Dcodegroup\LaravelChat\Models\User'));
 });

@@ -1,5 +1,5 @@
 <?php
 
-use Dcodegroup\LaravelChat\TestCase;
+use Dcodegroup\LaravelChat\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
