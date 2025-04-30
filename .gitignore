@@ -8,6 +8,7 @@ coverage
 .php_cs.cache
 tests/temp
 .php-cs-fixer.cache
+.phpunit.cache
 build
 node_modules
 package-lock.json
