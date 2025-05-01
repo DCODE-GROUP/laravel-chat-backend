@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Transport;
 use App\Models\User;
+use Dcodegroup\LaravelChat\Models\Chat;
 
 use function Pest\Laravel\actingAs;
 
@@ -8,10 +10,25 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
+test('can access home page', function () {
+    actingAs($this->user)
+        ->get('/test')
+        ->assertOk()
+        ->assertSee('test');
+});
+
 test('if relation not found for chat it makes a new one', function () {
-
     $this->assertDatabaseEmpty('chats');
+    $transport = Transport::factory()->create();
 
-    actingAs($this->user)->get(route(config('laravel-chat.route_name').'.create'))->assertRedirectToRoute(config('laravel-chat.route_name').'.chats.show', 1);
+    $response = actingAs($this->user)
+        ->post(route(config('laravel-chat.route_name').'.chat.create'), [
+            'chattable_type' => Transport::class,
+            'chattable_id' => (string) $transport->id,
+        ]);
+    //    dd($response->getContent());
+
+    $item = Chat::query()->latest()->first();
+    $response->assertRedirectToRoute(config('laravel-chat.route_name').'.chat.show', $item->id);
 
 });

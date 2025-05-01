@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<Transport>
  */
-class TransportFactory
+class TransportFactory extends Factory
 {
     public function definition(): array
     {

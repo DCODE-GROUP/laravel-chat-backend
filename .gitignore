@@ -12,3 +12,4 @@ tests/temp
 build
 node_modules
 package-lock.json
+/workbench/storage

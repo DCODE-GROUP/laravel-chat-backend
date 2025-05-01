@@ -4,7 +4,7 @@ namespace Dcodegroup\LaravelChat\Tests;
 
 use Dcodegroup\LaravelChat\LaravelChatServiceProvider;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Foundation\Testing\DatabaseTruncation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Attributes\WithEnv;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -14,7 +14,7 @@ use function Orchestra\Testbench\artisan;
 #[WithEnv('DB_CONNECTION', 'testing')]
 abstract class TestCase extends Orchestra
 {
-    use DatabaseTruncation;
+    use RefreshDatabase;
     use WithWorkbench;
 
     protected function setUp(): void

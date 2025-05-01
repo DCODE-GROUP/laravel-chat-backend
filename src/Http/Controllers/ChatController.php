@@ -13,10 +13,13 @@ class ChatController extends Controller
 {
     public function create(CreateRequest $request): RedirectResponse
     {
+        //        dd('got to top of controller');
         $chat = Chat::query()->byRelation($request->input('chattable_type'), $request->input('chattable_id'))->first();
 
         if ($chat instanceof Chat) {
-            return redirect()->route(config('laravel-chat.route_name').'.chats.show', $chat);
+            //            dd('should not be here');
+
+            return redirect()->route(config('laravel-chat.route_name').'.chat.show', $chat);
         }
 
         $chat = Chat::query()->create([
@@ -25,9 +28,11 @@ class ChatController extends Controller
             'open' => true,
         ]);
 
+        //        dd('here');
+
         event(new LaravelChatMessageCreated($chat));
 
-        return redirect()->route(config('laravel-chat.route_name').'.chats.show', $chat);
+        return redirect()->route(config('laravel-chat.route_name').'.chat.show', $chat);
     }
 
     public function show(Request $request, Chat $chat) {}
