@@ -22,7 +22,7 @@ return new class extends Migration
             $table
                 ->{config('laravel-chat.user_id_field_type')}('updated_by')
                 ->nullable();
-            $table->foreignIdFor('updated_by')
+            $table->foreign('updated_by')
                 ->references('id')
                 ->on(config('laravel-chat.user_table'));
             $table->timestamps();
@@ -35,7 +35,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('chats');
             $table->mediumText('message');
-            $table->{config('laravel-chat.users.user_id_field_type')}('user_id');
+            $table->{config('laravel-chat.user_id_field_type')}('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on(config('laravel-chat.user_table'));
@@ -48,7 +48,7 @@ return new class extends Migration
             $table->foreignUlid(Chat::class)
                 ->references('id')
                 ->on('chats');
-            $table->{config('laravel-chat.users.user_id_field_type')}('user_id');
+            $table->{config('laravel-chat.user_id_field_type')}('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on(config('laravel-chat.user_table'));
