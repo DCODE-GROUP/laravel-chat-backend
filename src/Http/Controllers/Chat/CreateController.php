@@ -1,17 +1,16 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Http\Controllers;
+namespace Dcodegroup\LaravelChat\Http\Controllers\Chat;
 
 use Dcodegroup\LaravelChat\Events\LaravelChatMessageCreated;
 use Dcodegroup\LaravelChat\Http\Requests\Chat\CreateRequest;
 use Dcodegroup\LaravelChat\Models\Chat;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ChatController extends Controller
+class CreateController extends Controller
 {
-    public function create(CreateRequest $request): RedirectResponse
+    public function __invoke(CreateRequest $request): RedirectResponse
     {
         //        dd('got to top of controller');
         $chat = Chat::query()->byRelation($request->input('chattable_type'), $request->input('chattable_id'))->first();
@@ -34,6 +33,4 @@ class ChatController extends Controller
 
         return redirect()->route(config('laravel-chat.route_name').'.chat.show', $chat);
     }
-
-    public function show(Request $request, Chat $chat) {}
 }
