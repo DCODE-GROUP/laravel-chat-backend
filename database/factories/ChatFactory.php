@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use Dcodegroup\LaravelChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Http\Controllers;
+namespace Dcodegroup\DCodeChat\Http\Controllers;
 
 use Illuminate\Http\Request;
 

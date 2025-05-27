@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Support\Traits;
+namespace Dcodegroup\DCodeChat\Support\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

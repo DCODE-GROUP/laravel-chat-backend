@@ -1,8 +1,8 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Http\Controllers;
+namespace Dcodegroup\DCodeChat\Http\Controllers;
 
-use Dcodegroup\LaravelChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Http\Request;
 
 class HeaderController

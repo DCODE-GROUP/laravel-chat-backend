@@ -1,8 +1,8 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Tests;
+namespace Dcodegroup\DCodeChat\Tests;
 
-use Dcodegroup\LaravelChat\LaravelChatServiceProvider;
+use Dcodegroup\DCodeChat\DCodeChatServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Attributes\WithEnv;
@@ -71,7 +71,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelChatServiceProvider::class,
+            DCodeChatServiceProvider::class,
         ];
     }
 }

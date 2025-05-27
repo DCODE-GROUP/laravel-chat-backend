@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Http\Requests\Chat;
+namespace Dcodegroup\DCodeChat\Http\Requests\Chat;
 
 use Illuminate\Foundation\Http\FormRequest;
 

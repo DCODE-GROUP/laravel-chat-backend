@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Dcodegroup\LaravelChat\Models\Chat;
-use Dcodegroup\LaravelChat\Models\ChatUser;
+use Dcodegroup\DCodeChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\ChatUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,7 +15,7 @@ class ChatUserFactory extends Factory
     {
         return [
             'chat_id' => Chat::factory(),
-            'user_id' => config('laravel-chat.user_model')::factory(),
+            'user_id' => config('dcode-chat.user_model')::factory(),
         ];
     }
 }

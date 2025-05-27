@@ -1,6 +1,6 @@
 {
-  "name": "dcodegroup/laravel-chat",
-  "description": "Package to add chat functionality to your Laravel application",
+  "name": "dcodegroup/dcode-chat-backend",
+  "description": "Package to add model aware chat functionality to your Laravel application",
   "license": "MIT",
   "keywords": [
     "laravel",
@@ -22,11 +22,13 @@
   ],
   "require": {
     "php": "^8.3",
-    "illuminate/contracts": "^10.0||^11.0||^12.0",
     "illuminate/config": "^10.0|^11.0|^12.0",
+    "illuminate/contracts": "^10.0||^11.0||^12.0",
     "illuminate/database": "^10.0|^11.0|^12.0",
     "illuminate/support": "^10.0|^11.0|^12.0",
-    "nesbot/carbon": "^2.72|^3.0"
+    "nesbot/carbon": "^2.72|^3.0",
+    "spatie/data-transfer-object": "^3.9",
+    "tightenco/ziggy": "^2.5"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2.42",
@@ -42,12 +44,12 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "Dcodegroup\\LaravelChat\\": "src/"
+      "Dcodegroup\\DCodeChat\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Dcodegroup\\LaravelChat\\Tests\\": "tests/",
+      "Dcodegroup\\DCodeChat\\Tests\\": "tests/",
       "Workbench\\App\\": "workbench/app/",
       "App\\": "workbench/app/",
       "Database\\Factories\\": "workbench/database/factories/",
@@ -65,14 +67,14 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Dcodegroup\\LaravelChat\\LaravelChatServiceProvider"
+        "Dcodegroup\\DCodeChat\\DCodeChatServiceProvider"
       ]
     }
   },
   "scripts": {
     "analyse": "vendor/bin/phpstan analyse",
     "post-autoload-dump": "@composer run prepare",
-    "clear": "@php vendor/bin/testbench package:purge-laravel-chat --ansi",
+    "clear": "@php vendor/bin/testbench package:purge-dcode-chat --ansi",
     "prepare": "@php vendor/bin/testbench package:discover --ansi",
     "build": [
       "@composer run prepare",

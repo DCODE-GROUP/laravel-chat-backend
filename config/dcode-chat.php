@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\User;
-use Dcodegroup\LaravelChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\Chat;
 
 return [
     /*
@@ -24,14 +24,14 @@ return [
      | Here you can configure the route paths and route name variables.
      |
      | What should the route path for the chat be
-     | eg '/laravel-chat'
+     | eg '/dcode-chat'
      |
      | What should the route name for the chat be
-     | eg 'api.laravel-chat',
+     | eg 'api.dcode-chat',
      */
 
-    'route_path' => env('LARAVEL_CHAT_ROUTE_PATH', 'laravel-chat'),
-    'route_name' => env('LARAVEL_CHAT_LOG_ROUTE_NAME', 'laravel-chat'),
+    'route_path' => env('DCODE_CHAT_ROUTE_PATH', 'dcode-chat'),
+    'route_name' => env('DCODE_CHAT_LOG_ROUTE_NAME', 'dcode-chat'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +43,8 @@ return [
     |
     */
 
-    'binding' => env('LARAVEL_CHAT_MODEL_BINDING', 'laravel-chat'),
-    'laravel_chat_model' => Chat::class,
+    'binding' => env('DCODE_CHAT_MODEL_BINDING', 'dcode-chat'),
+    'dcode_chat_model' => Chat::class,
 
     /*
      |--------------------------------------------------------------------------
@@ -55,8 +55,8 @@ return [
      |
     */
 
-    'datetime_format' => env('LARAVEL_CHAT_DATETIME_FORMAT', 'j M Y H:ia'),
-    'date_format' => env('LARAVEL_CHAT_DATE_FORMAT', 'j.m.Y'),
+    'datetime_format' => env('DCODE_CHAT_DATETIME_FORMAT', 'j M Y H:ia'),
+    'date_format' => env('DCODE_CHAT_DATE_FORMAT', 'j.m.Y'),
 
     /*
      |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ return [
     */
 
     'user_model' => User::class,
-    'user_table' => env('LARAVEL_CHAT_USERS_TABLE', 'users'),
-    'user_id_field_type' => env('LARAVEL_CHAT_USERS_ID_FIELD_TYPE', 'unsignedBigInteger'),
+    'user_table' => env('DCODE_CHAT_USERS_TABLE', 'users'),
+    'user_id_field_type' => env('DCODE_CHAT_USERS_ID_FIELD_TYPE', 'unsignedBigInteger'),
 
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Commands;
+namespace Dcodegroup\DCodeChat\Commands;
 
 use Illuminate\Console\Command;
 
@@ -11,28 +11,28 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laravel-chat:install';
+    protected $signature = 'dcode-chat:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install all of the Laravel Chat Feature';
+    protected $description = 'Install all of the DCode Chat Feature';
 
     public function handle(): void
     {
         if (app()->environment('local')) {
-            $this->comment('Publishing Laravel Chat Migrations');
-            $this->callSilent('vendor:publish', ['--tag' => 'laravel-chat-migrations']);
+            $this->comment('Publishing DCode Chat Migrations');
+            $this->callSilent('vendor:publish', ['--tag' => 'dcode-chat-migrations']);
         }
 
-        $this->comment('Publishing Laravel ChatConfiguration...');
-        $this->callSilent('vendor:publish', ['--tag' => 'laravel-chat-config']);
+        $this->comment('Publishing DCode ChatConfiguration...');
+        $this->callSilent('vendor:publish', ['--tag' => 'dcode-chat-config']);
 
-        $this->comment('Publishing Laravel Chat Translations...');
-        $this->callSilent('vendor:publish', ['--tag' => 'laravel-chat-translations']);
+        $this->comment('Publishing DCode Chat Translations...');
+        $this->callSilent('vendor:publish', ['--tag' => 'dcode-chat-translations']);
 
-        $this->info('Laravel Chat scaffolding installed successfully.');
+        $this->info('DCode Chat scaffolding installed successfully.');
     }
 }

@@ -1,13 +1,15 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Models;
+namespace Dcodegroup\DCodeChat\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ChatUser extends Model
+class ChatUser extends Pivot
 {
+    use HasUlids;
     use SoftDeletes;
 
     protected $fillable = [
@@ -35,6 +37,6 @@ class ChatUser extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(config('laravel-chat.user_model'));
+        return $this->belongsTo(config('dcode-chat.user_model'));
     }
 }

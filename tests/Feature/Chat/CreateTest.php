@@ -2,7 +2,7 @@
 
 use App\Models\Transport;
 use App\Models\User;
-use Dcodegroup\LaravelChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\Chat;
 
 use function Pest\Laravel\actingAs;
 
@@ -22,13 +22,13 @@ test('if relation not found for chat it makes a new one', function () {
     $transport = Transport::factory()->create();
 
     $response = actingAs($this->user)
-        ->post(route(config('laravel-chat.route_name').'.chat.create'), [
+        ->post(route(config('dcode-chat.route_name').'.chat.create'), [
             'chattable_type' => Transport::class,
             'chattable_id' => (string) $transport->id,
         ]);
     //    dd($response->getContent());
 
     $item = Chat::query()->latest()->first();
-    $response->assertRedirectToRoute(config('laravel-chat.route_name').'.chat.show', $item->id);
+    $response->assertRedirectToRoute(config('dcode-chat.route_name').'.chat.show', $item->id);
 
 });

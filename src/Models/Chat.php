@@ -1,12 +1,12 @@
 <?php
 
-namespace Dcodegroup\LaravelChat\Models;
+namespace Dcodegroup\DCodeChat\Models;
 
-use Dcodegroup\LaravelChat\Support\Traits\LastModifiedBy;
+use Dcodegroup\DCodeChat\Support\Traits\LastModifiedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Chat extends Model
 {
     use HasFactory;
+    use HasUlids;
     use LastModifiedBy;
     use SoftDeletes;
 
@@ -36,9 +37,29 @@ class Chat extends Model
         return $this->morphTo('chattable');
     }
 
-    public function chats(): HasMany
+    public function users()
     {
-        return $this->hasMany(Chat::class);
+        // Which chats is the user part of from chat_users pivot table
+        // This assumes that the pivot table is named 'chat_users' and has 'user_id' and 'chat_id' columns
+        return $this->belongsToMany(
+            config('dcode-chat.user_model'),
+            'chat_users',
+            'chat_id',
+            'user_id'
+        )->using(ChatUser::class)->withPivot([
+            'user_name',
+            'user_avatar',
+            'chat_title',
+            'chat_description',
+            'chat_avatar',
+            'last_read_at',
+            'has_new_messages',
+        ])->withTimestamps();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(ChatMessage::class);
     }
 
     public function scopeByRelation(Builder $query, string $chattableType, string $chattableId): void
