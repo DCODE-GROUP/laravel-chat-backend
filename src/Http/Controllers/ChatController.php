@@ -2,6 +2,7 @@
 
 namespace Dcodegroup\DCodeChat\Http\Controllers;
 
+use Dcodegroup\DCodeChat\Events\DCodeChatMessageCreated;
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

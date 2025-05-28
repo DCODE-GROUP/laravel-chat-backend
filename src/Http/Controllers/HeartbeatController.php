@@ -13,7 +13,7 @@ class HeartbeatController extends ChatController
      */
     public function __invoke()
     {
-        $chats = ChatService::getChatsForUser(auth()->user());
+        $chats = ChatService::getChatsForUser(auth()->user(), request()->input('query', ''));
         $newMessages = [];
         if ($currentChat = request()->input('currentChat')) {
             // If a current chat is specified, check if it has new messages
@@ -21,7 +21,7 @@ class HeartbeatController extends ChatController
             if ($currentChat) {
                 $currentChat->load('messages');
 
-                if ($afterId = request()->input('lastMessage')) {
+                if ($afterId = request()->input('lastMessageId')) {
                     // If an 'after' parameter is provided, filter chats to only include those after the specified ID
                     $currentChat->load('messages');
                     $newMessages = $currentChat->messages->filter(function ($chat) use ($afterId) {

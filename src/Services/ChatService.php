@@ -10,10 +10,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatService
 {
-    public function getChatsForUser(Model $user)
+    public function getChatsForUser(Model $user, ?string $search = null)
     {
         // Fetch all chats for the given user
-        return $user->chats()->get();
+        $query = $user->chats();
+        if ($search) {
+            // If a search term is provided, filter chats by title or description
+            $query->where(function ($q) use ($search) {
+                $q->where('chat_title', 'like', '%'.$search.'%')
+                    ->orWhere('chat_description', 'like', '%'.$search.'%')
+                    ->orWhereHas('messages', function ($q) use ($search) {
+                        $q->where('message', 'like', '%'.$search.'%');
+                    });
+            });
+        }
+
+        return $query->get();
     }
 
     public function getChatById(Model $user, $chatId)
@@ -42,7 +54,7 @@ class ChatService
         return $message;
     }
 
-    public function startChat(Authorizable $fromUser, ?Authorizable $toUser = null, ?Model $forModel = null)
+    public function startChat(Authorizable $fromUser, ?array $toUsers = [], ?Model $forModel = null)
     {
         // Logic to start a chat for the user
         if ($forModel) {
@@ -54,10 +66,11 @@ class ChatService
             $chat = Chat::create();
         }
 
-        if (! $toUser) {
-            $toUser = ChatResolver::resolveUser($forModel);
+        if (count($toUsers) == 0) {
+            $toUsers = ChatResolver::resolveUsers($forModel);
         }
-        $chat->users()->syncWithoutDetaching([$fromUser->id, $toUser->id]);
+        $chat->users()->syncWithoutDetaching([$fromUser->id]);
+        $chat->users()->syncWithoutDetaching($toUsers->pluck('id')->toArray());
         $chat->refresh();
 
         $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $fromUser);
@@ -77,21 +90,23 @@ class ChatService
             'chat_avatar' => $userChatAttributes->chatAvatarUrl,
         ]);
 
-        $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $toUser);
-        if ($userChatAttributes->userAvatarUrl === null) {
-            $userChatAttributes->userAvatarUrl = route(config('dcode-chat.route_name').'.chat.user_avatar', [$chat, $toUser]);
-        }
-        if ($userChatAttributes->chatAvatarUrl === null) {
-            $userChatAttributes->chatAvatarUrl = route(config('dcode-chat.route_name').'.chat.default_avatar', $chat);
-        }
+        foreach ($toUsers as $toUser) {
+            $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $toUser);
+            if ($userChatAttributes->userAvatarUrl === null) {
+                $userChatAttributes->userAvatarUrl = route(config('dcode-chat.route_name').'.chat.user_avatar', [$chat, $toUser]);
+            }
+            if ($userChatAttributes->chatAvatarUrl === null) {
+                $userChatAttributes->chatAvatarUrl = route(config('dcode-chat.route_name').'.chat.default_avatar', $chat);
+            }
 
-        $chat->users()->updateExistingPivot($toUser->id, [
-            'user_name' => $userChatAttributes->userDisplayName,
-            'user_avatar' => $userChatAttributes->userAvatarUrl,
-            'chat_title' => $userChatAttributes->userChatTitle,
-            'chat_description' => $userChatAttributes->userChatSubtitle,
-            'chat_avatar' => $userChatAttributes->chatAvatarUrl,
-        ]);
+            $chat->users()->updateExistingPivot($toUser->id, [
+                'user_name' => $userChatAttributes->userDisplayName,
+                'user_avatar' => $userChatAttributes->userAvatarUrl,
+                'chat_title' => $userChatAttributes->userChatTitle,
+                'chat_description' => $userChatAttributes->userChatSubtitle,
+                'chat_avatar' => $userChatAttributes->chatAvatarUrl,
+            ]);
+        }
 
         return $chat;
     }

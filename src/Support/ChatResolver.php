@@ -5,11 +5,12 @@ namespace Dcodegroup\DCodeChat\Support;
 use Dcodegroup\DCodeChat\Data\ChatUserAttributes;
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ChatResolver
 {
-    protected static $userResolver;
+    protected static $usersResolver;
 
     protected static $chatAttributeResolver;
 
@@ -18,13 +19,13 @@ class ChatResolver
      *
      * @return mixed
      */
-    public static function resolveUser(?Model $model = null): Authorizable
+    public static function resolveUsers(?Model $model = null): array|Collection
     {
-        if (! static::$userResolver) {
+        if (! static::$usersResolver) {
             throw new \Exception('User resolver not set.');
         }
 
-        return call_user_func(static::$userResolver, $model);
+        return call_user_func(static::$usersResolver, $model);
     }
 
     public static function resolveUserChatAttributes(Chat $chat, Authorizable $user): ChatUserAttributes
@@ -39,12 +40,12 @@ class ChatResolver
     /**
      * Set the user resolver.
      *
-     * @param  callable(?Model $model): Authorizable  $resolver
+     * @param  callable(?Model $model): array|Collection  $resolver
      * @return void
      */
-    public static function setUserResolver(callable $resolver)
+    public static function setUsersResolver(callable $resolver)
     {
-        static::$userResolver = $resolver;
+        static::$usersResolver = $resolver;
     }
 
     /**

@@ -2,16 +2,12 @@
 
 use Dcodegroup\DCodeChat\Http\Controllers\ChatAvatarController;
 use Dcodegroup\DCodeChat\Http\Controllers\ChatController;
-use Dcodegroup\DCodeChat\Http\Controllers\HeaderController;
 use Dcodegroup\DCodeChat\Http\Controllers\HeartbeatController;
 use Dcodegroup\DCodeChat\Http\Controllers\MessagesController;
 use Dcodegroup\DCodeChat\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get(config('dcode-chat.route_path').'/header/{chat}', HeaderController::class)
-        ->name(config('dcode-chat.route_name').'.header');
-
     Route::get(config('dcode-chat.route_path').'/search/', SearchController::class)
         ->name(config('dcode-chat.route_name').'.search');
 
