@@ -74,13 +74,6 @@ class ChatService
         $chat->refresh();
 
         $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $fromUser);
-        if ($userChatAttributes->userAvatarUrl === null) {
-            $userChatAttributes->userAvatarUrl = route(config('dcode-chat.route_name').'.chat.user_avatar', [$chat, $fromUser]);
-        }
-
-        if ($userChatAttributes->chatAvatarUrl === null) {
-            $userChatAttributes->chatAvatarUrl = route(config('dcode-chat.route_name').'.chat.default_avatar', $chat);
-        }
 
         $chat->users()->updateExistingPivot($fromUser->id, [
             'user_name' => $userChatAttributes->userDisplayName,
@@ -92,12 +85,6 @@ class ChatService
 
         foreach ($toUsers as $toUser) {
             $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $toUser);
-            if ($userChatAttributes->userAvatarUrl === null) {
-                $userChatAttributes->userAvatarUrl = route(config('dcode-chat.route_name').'.chat.user_avatar', [$chat, $toUser]);
-            }
-            if ($userChatAttributes->chatAvatarUrl === null) {
-                $userChatAttributes->chatAvatarUrl = route(config('dcode-chat.route_name').'.chat.default_avatar', $chat);
-            }
 
             $chat->users()->updateExistingPivot($toUser->id, [
                 'user_name' => $userChatAttributes->userDisplayName,
