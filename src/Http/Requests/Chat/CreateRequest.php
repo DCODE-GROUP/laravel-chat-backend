@@ -14,8 +14,8 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'chattable_id' => ['required', 'string'],
-            'chattable_type' => ['required', 'string'],
+            'chatable_id' => ['required', 'string'],
+            'chatable_type' => ['required', 'string'],
         ];
     }
 }

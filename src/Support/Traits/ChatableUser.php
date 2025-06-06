@@ -4,7 +4,7 @@ namespace Dcodegroup\DCodeChat\Support\Traits;
 
 use Dcodegroup\DCodeChat\Models\ChatUser;
 
-trait Chatable
+trait ChatableUser
 {
     /**
      * Get the chats for the user.

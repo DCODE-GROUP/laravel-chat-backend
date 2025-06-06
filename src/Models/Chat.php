@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @method Builder byRelation(string $chattableType, string $chattableId)
+ * @method Builder byRelation(string $chatableType, string $chatableId)
  */
 class Chat extends Model
 {
@@ -21,8 +21,8 @@ class Chat extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'chattable_type',
-        'chattable_id',
+        'chatable_type',
+        'chatable_id',
         'open',
         'created_by',
         'updated_by',
@@ -32,9 +32,9 @@ class Chat extends Model
         'open' => 'boolean',
     ];
 
-    public function chattable(): MorphTo
+    public function chatable(): MorphTo
     {
-        return $this->morphTo('chattable');
+        return $this->morphTo('chatable');
     }
 
     public function users()
@@ -62,9 +62,9 @@ class Chat extends Model
         return $this->hasMany(ChatMessage::class);
     }
 
-    public function scopeByRelation(Builder $query, string $chattableType, string $chattableId): void
+    public function scopeByRelation(Builder $query, string $chatableType, string $chatableId): void
     {
-        $query->where('chattable_type', $chattableType)
-            ->where('chattable_id', $chattableId);
+        $query->where('chatable_type', $chatableType)
+            ->where('chatable_id', $chatableId);
     }
 }

@@ -23,8 +23,8 @@ test('if relation not found for chat it makes a new one', function () {
 
     $response = actingAs($this->user)
         ->post(route(config('dcode-chat.route_name').'.chat.create'), [
-            'chattable_type' => Transport::class,
-            'chattable_id' => (string) $transport->id,
+            'chatable_type' => Transport::class,
+            'chatable_id' => (string) $transport->id,
         ]);
     //    dd($response->getContent());
 

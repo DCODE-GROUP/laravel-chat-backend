@@ -20,23 +20,15 @@ class ChatMessage extends Model
     ];
 
     protected $appends = [
-        'is_me',
         'user_attributes',
     ];
-
-    public function isMe(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->user_id === auth()?->id(),
-        );
-    }
 
     public function userAttributes(): Attribute
     {
         return Attribute::make(
             function () {
 
-                return $this->chat->users()
+                return $this->loadMissing('chat')->chat->users()
                     ->where('user_id', $this->user_id)
                     ->first()?->pivot;
             });

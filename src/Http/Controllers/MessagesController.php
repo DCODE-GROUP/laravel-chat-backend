@@ -2,6 +2,7 @@
 
 namespace Dcodegroup\DCodeChat\Http\Controllers;
 
+use Dcodegroup\DCodeChat\Events\DCodeChatUnreadStatusChange;
 use Dcodegroup\DCodeChat\Facades\ChatService;
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Http\Request;
@@ -15,15 +16,17 @@ class MessagesController
             abort(403, 'You are not authorized to view messages in this chat.');
         }
 
-        // Fetch messages for the chat
-        $messages = $chat->messages()->with('user')->get();
-
         if ($request->input('markAsRead', 'false') === 'true') {
             // Update pivot data for the current user to indicate they have read all messages
             $chat->users()->updateExistingPivot(auth()->id(), [
                 'has_new_messages' => false,
                 'last_read_at' => now(),
             ]);
+
+            DCodeChatUnreadStatusChange::dispatch(
+                auth()->user()->chats()->where('chat_id', $chat->id)->first(),
+                auth()->user()
+            );
         }
 
         return response()->json([

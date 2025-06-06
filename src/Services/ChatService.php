@@ -2,7 +2,9 @@
 
 namespace Dcodegroup\DCodeChat\Services;
 
-use Dcodegroup\DCodeChat\Events\DCodeChatMessageCreated;
+use Dcodegroup\DCodeChat\Events\DCodeChatCreatedForUser;
+use Dcodegroup\DCodeChat\Events\DCodeChatMessageSentForUser;
+use Dcodegroup\DCodeChat\Events\DCodeChatUnreadStatusChange;
 use Dcodegroup\DCodeChat\Models\Chat;
 use Dcodegroup\DCodeChat\Support\ChatResolver;
 use Illuminate\Contracts\Auth\Access\Authorizable;
@@ -42,14 +44,23 @@ class ChatService
         ]);
 
         // Update pivot data for all other users in the chat to indicate they have new messages
-        $userIds = $chat->users()
-            ->where('user_id', '!=', $fromUser->id)->pluck('user_id');
+        $chat->users()->where('user_id', '!=', $fromUser->id)->each(function ($user) use ($chat) {
+            $chat->users()->updateExistingPivot($user->id, [
+                'has_new_messages' => true,
+            ]);
+            DCodeChatUnreadStatusChange::dispatch(
+                $user->chats()->where('chat_id', $chat->id)->first(),
+                $user
+            );
+        });
 
-        $chat->users()->updateExistingPivot($userIds, [
-            'has_new_messages' => true,
-        ]);
-
-        event(new DCodeChatMessageCreated($message));
+        foreach ($chat->users as $user) {
+            DCodeChatMessageSentForUser::dispatch(
+                $user->chats()->where('chat_id', $chat->id)->first(),
+                $message,
+                $user
+            );
+        }
 
         return $message;
     }
@@ -93,6 +104,12 @@ class ChatService
                 'chat_description' => $userChatAttributes->userChatSubtitle,
                 'chat_avatar' => $userChatAttributes->chatAvatarUrl,
             ]);
+        }
+
+        $chat->refresh();
+        DCodeChatCreatedForUser::dispatch($fromUser->chats()->where('chat_id', $chat->id)->first(), $fromUser);
+        foreach ($toUsers as $toUser) {
+            DCodeChatCreatedForUser::dispatch($toUser->chats()->where('chat_id', $chat->id)->first(), $toUser);
         }
 
         return $chat;
