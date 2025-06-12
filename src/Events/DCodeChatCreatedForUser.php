@@ -6,11 +6,11 @@ use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DCodeChatCreatedForUser implements ShouldBroadcastNow
+class DCodeChatCreatedForUser implements ShouldBroadcast
 {
     use Dispatchable;
     use InteractsWithSockets;

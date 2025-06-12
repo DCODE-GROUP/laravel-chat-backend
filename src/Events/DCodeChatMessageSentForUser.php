@@ -7,11 +7,11 @@ use Dcodegroup\DCodeChat\Models\ChatMessage;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DCodeChatMessageSentForUser implements ShouldBroadcastNow
+class DCodeChatMessageSentForUser implements ShouldBroadcast
 {
     use Dispatchable;
     use InteractsWithSockets;
