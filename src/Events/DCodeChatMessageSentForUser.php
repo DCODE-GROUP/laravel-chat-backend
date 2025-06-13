@@ -17,7 +17,10 @@ class DCodeChatMessageSentForUser implements ShouldBroadcastNow
     use InteractsWithSockets;
     use SerializesModels;
 
-    public function __construct(public Chat $chat, public ChatMessage $message, protected Authorizable $user) {}
+    public function __construct(public Chat $chat, public ChatMessage $message, protected Authorizable $user)
+    {
+        $this->chat->unsetRelation('messages');
+    }
 
     public function broadcastOn(): array
     {
