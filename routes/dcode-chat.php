@@ -4,7 +4,6 @@ use Dcodegroup\DCodeChat\Http\Controllers\ChatController;
 use Dcodegroup\DCodeChat\Http\Controllers\HeartbeatController;
 use Dcodegroup\DCodeChat\Http\Controllers\MessagesController;
 use Dcodegroup\DCodeChat\Http\Controllers\SearchController;
-use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -25,8 +24,4 @@ Route::group(['middleware' => 'auth'], function () {
         ->name(config('dcode-chat.route_name').'.messages.store');
 
     Route::get(config('dcode-chat.route_path').'/heartbeat', HeartbeatController::class)->name(config('dcode-chat.route_name').'.heartbeat');
-});
-
-Broadcast::channel('dcode-chat.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
 });

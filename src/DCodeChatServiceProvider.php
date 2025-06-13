@@ -3,6 +3,7 @@
 namespace Dcodegroup\DCodeChat;
 
 use Dcodegroup\DCodeChat\Commands\InstallCommand;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -64,6 +65,11 @@ class DCodeChatServiceProvider extends ServiceProvider
             'middleware' => config('dcode-chat.middleware', 'web'),
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/dcode-chat.php');
+        });
+
+        Broadcast::routes();
+        Broadcast::channel('dcode-chat.{userId}', function ($user, $userId) {
+            return (int) $user->id === (int) $userId;
         });
     }
 
