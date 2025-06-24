@@ -25,6 +25,7 @@ trait ChatableUser
             'user_avatar',
             'chat_title',
             'chat_description',
+            'chat_description_link',
             'chat_avatar',
             'last_read_at',
             'has_new_messages',

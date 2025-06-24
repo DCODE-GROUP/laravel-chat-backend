@@ -12,5 +12,8 @@ class ChatUserAttributes extends DataTransferObject
         public string $userChatSubtitle,
         public ?string $chatAvatarUrl = null,
         public ?string $userAvatarUrl = null,
+        public ?string $userChatDescriptionLink = null,
+        public ?string $userChatBubbleMessage = null,
+        public ?string $userChatBubbleClass = null,
     ) {}
 }

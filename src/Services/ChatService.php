@@ -91,6 +91,9 @@ class ChatService
             'user_avatar' => $userChatAttributes->userAvatarUrl,
             'chat_title' => $userChatAttributes->userChatTitle,
             'chat_description' => $userChatAttributes->userChatSubtitle,
+            'chat_description_link' => $userChatAttributes->userChatDescriptionLink,
+            'chat_bubble_message' => $userChatAttributes->userChatBubbleMessage,
+            'chat_bubble_class' => $userChatAttributes->userChatBubbleClass,
             'chat_avatar' => $userChatAttributes->chatAvatarUrl,
         ]);
 
@@ -102,6 +105,9 @@ class ChatService
                 'user_avatar' => $userChatAttributes->userAvatarUrl,
                 'chat_title' => $userChatAttributes->userChatTitle,
                 'chat_description' => $userChatAttributes->userChatSubtitle,
+                'chat_description_link' => $userChatAttributes->userChatDescriptionLink,
+                'chat_bubble_message' => $userChatAttributes->userChatBubbleMessage,
+                'chat_bubble_class' => $userChatAttributes->userChatBubbleClass,
                 'chat_avatar' => $userChatAttributes->chatAvatarUrl,
             ]);
         }

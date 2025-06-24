@@ -18,22 +18,16 @@ return new class extends Migration
                 ->references('id')
                 ->on(config('dcode-chat.user_table'));
 
-            $table->string('user_name')
-                ->nullable();
-            $table->text('user_avatar')
-                ->nullable();
-            $table->text('chat_title')
-                ->nullable();
-            $table->text('chat_description')
-                ->nullable();
-            $table->text('chat_avatar')
-                ->nullable();
-
-            $table->timestamp('last_read_at')
-                ->nullable();
-
+            $table->string('user_name')->nullable();
+            $table->text('user_avatar')->nullable();
+            $table->text('chat_title')->nullable();
+            $table->text('chat_description')->nullable();
+            $table->text('chat_description_link')->nullable();
+            $table->text('chat_bubble_message')->nullable();
+            $table->text('chat_bubble_class')->nullable();
+            $table->text('chat_avatar')->nullable();
+            $table->timestamp('last_read_at')->nullable();
             $table->boolean('has_new_messages')->default(false);
-
             $table->timestamps();
             $table->softDeletes();
         });
