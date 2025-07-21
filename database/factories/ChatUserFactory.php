@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Dcodegroup\DCodeChat\Factories;
 
 use Dcodegroup\DCodeChat\Models\Chat;
 use Dcodegroup\DCodeChat\Models\ChatUser;
@@ -17,5 +17,10 @@ class ChatUserFactory extends Factory
             'chat_id' => Chat::factory(),
             'user_id' => config('dcode-chat.user_model')::factory(),
         ];
+    }
+
+    public function modelName()
+    {
+        return ChatUser::class;
     }
 }

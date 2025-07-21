@@ -3,14 +3,18 @@
 namespace Dcodegroup\DCodeChat\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ChatUser extends Pivot
 {
+    use HasFactory;
     use HasUlids;
     use SoftDeletes;
+
+    protected $table = 'chat_users';
 
     protected $fillable = [
         'chat_id',
@@ -40,5 +44,25 @@ class ChatUser extends Pivot
     public function user(): BelongsTo
     {
         return $this->belongsTo(config('dcode-chat.user_model'));
+    }
+
+    public function scopeHasUnreadMessages($query)
+    {
+        $query->whereHas('chat', function ($query) {
+            $query->whereNull('deleted_at');
+        })
+            ->where('has_new_messages', true)
+            ->where(function ($query) {
+                $query->whereNull('last_read_at')
+                    ->orWhere('last_read_at', '<', function ($subQuery) {
+                        $subQuery->select('chat_messages.created_at')
+                            ->from('chat_messages')
+                            ->whereColumn('chat_messages.chat_id', 'chat_users.chat_id')
+                            ->where('chat_messages.user_id', '!=', 'chat_users.user_id')
+                            ->orderBy('chat_messages.created_at', 'desc')
+                            ->limit(1);
+                    });
+
+            });
     }
 }

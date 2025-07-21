@@ -4,6 +4,7 @@ namespace Dcodegroup\DCodeChat\Tests;
 
 use Dcodegroup\DCodeChat\DCodeChatServiceProvider;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Attributes\WithEnv;
 use Orchestra\Testbench\Concerns\WithWorkbench;
@@ -20,6 +21,16 @@ abstract class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+
+        Factory::guessFactoryNamesUsing(function (string $modelName) {
+            $refClass = new \ReflectionClass($modelName);
+            $namespace = $refClass->getNamespaceName();
+            if ($namespace === 'Dcodegroup\DCodeChat\Models') {
+                return 'Dcodegroup\\DCodeChat\\Factories\\'.class_basename($modelName).'Factory';
+            }
+
+            return 'Database\\Factories\\'.class_basename($modelName).'Factory';
+        });
 
         //        QueryBuilderRequest::resetDelimiters();
         //
@@ -59,9 +70,6 @@ abstract class TestCase extends Orchestra
     protected function defineDatabaseMigrations()
     {
         artisan($this, 'migrate', ['--database' => 'testing']);
-        $chatTableMigration = require __DIR__.'/../database/migrations/create_chats_tables.stub.php';
-
-        $chatTableMigration->up();
 
         $this->beforeApplicationDestroyed(
             fn () => artisan($this, 'migrate:rollback', ['--database' => 'testing'])
