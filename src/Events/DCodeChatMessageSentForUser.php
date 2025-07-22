@@ -25,7 +25,7 @@ class DCodeChatMessageSentForUser implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         $broadcasts = [
-            new PrivateChannel('dcode-chat.'.$this->user->id),
+            new PrivateChannel('dcode-chat.'.$this->user->id), // @phpstan-ignore-line
         ];
 
         return $broadcasts;

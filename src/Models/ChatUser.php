@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property string $chat_id
+ * @property string $user_id
+ * @property string|null $user_name
+ * @property string|null $user_avatar
+ * @property string|null $chat_title
+ * @property string|null $chat_description
+ * @property string|null $chat_description_link
+ * @property string|null $chat_bubble_message
+ * @property string|null $chat_bubble_class
+ * @property string|null $chat_avatar
+ * @property \Illuminate\Support\Carbon|null $last_read_at
+ * @property bool $has_new_messages
+ */
 class ChatUser extends Pivot
 {
     use HasFactory;

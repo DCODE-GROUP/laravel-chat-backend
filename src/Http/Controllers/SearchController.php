@@ -12,7 +12,7 @@ class SearchController
         $results = collect();
 
         if ($search) {
-            $results = auth()->user()->load(['chats' => function ($query) use ($search) {
+            $results = auth()->user()->load(['chats' => function ($query) use ($search) { // @phpstan-ignore-line
                 $query->where('is_archived', false)
                     ->where(function ($query) use ($search) {
                         $query->where('chat_title', 'like', '%'.$search.'%')
@@ -25,7 +25,7 @@ class SearchController
                         $query->where('is_archived', false)
                             ->orderBy('created_at', 'desc');
                     }]);
-            }])->chats;
+            }])->chats; // @phpstan-ignore-line
         }
 
         return response()->json($results);

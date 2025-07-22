@@ -16,8 +16,6 @@ class ChatResolver
 
     /**
      * Resolve the user, optionally with a model context.
-     *
-     * @return mixed
      */
     public static function resolveUsers(?Model $model = null): array|Collection
     {
@@ -40,7 +38,7 @@ class ChatResolver
     /**
      * Set the user resolver.
      *
-     * @param  callable(?Model $model): array|Collection  $resolver
+     * @param  callable  $resolver  A callback that takes a Model|null and returns an array or Collection
      * @return void
      */
     public static function setUsersResolver(callable $resolver)

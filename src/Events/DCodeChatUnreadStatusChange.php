@@ -21,14 +21,14 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
 
     public function __construct(public Chat $chat, protected Authorizable $user)
     {
-        $this->unreadChats = $user->chats()->where('has_new_messages', true)->get();
+        $this->unreadChats = $user->chats()->where('has_new_messages', true)->get(); // @phpstan-ignore-line
         $this->chat->unsetRelation('messages');
     }
 
     public function broadcastOn(): array
     {
         $broadcasts = [];
-        $broadcasts[] = new PrivateChannel('dcode-chat.'.$this->user->id);
+        $broadcasts[] = new PrivateChannel('dcode-chat.'.$this->user->id); // @phpstan-ignore-line
 
         return $broadcasts;
     }

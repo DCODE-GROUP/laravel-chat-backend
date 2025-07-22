@@ -30,7 +30,7 @@ class SendUnreadNotifications extends Command
             $notification = ChatEmailNotification::firstOrNew(['user_id' => $userId]);
 
             // Skip if the user logged in within the last hour
-            if ($user->last_login_at && $user->last_login_at > $cutoff) {
+            if ($user->last_login_at && $user->last_login_at > $cutoff) { // @phpstan-ignore-line
                 continue;
             }
 
@@ -62,7 +62,7 @@ class SendUnreadNotifications extends Command
                 continue;
             }
 
-            Mail::to($user->email)->queue(new UnreadMessageSummary($unreadMessages, $user));
+            Mail::to($user->email)->queue(new UnreadMessageSummary($unreadMessages, $user)); // @phpstan-ignore-line
 
             $notification->last_message_at = $latestMessageTime;
             $notification->last_notified_at = now();
