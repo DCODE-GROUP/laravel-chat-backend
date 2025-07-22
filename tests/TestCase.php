@@ -31,22 +31,7 @@ abstract class TestCase extends Orchestra
 
             return 'Database\\Factories\\'.class_basename($modelName).'Factory';
         });
-
-        //        QueryBuilderRequest::resetDelimiters();
-        //
-        //        Factory::guessFactoryNamesUsing(
-        //            fn (string $modelName) => 'Spatie\\QueryBuilder\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        //        );
-
-        //        $this->setUpDatabase();
     }
-
-    //    protected function setUpDatabase()
-    //    {
-    //        $chatTableMigration = require __DIR__.'/../database/migrations/create_chat_tables.php.stub';
-    //
-    //        $chatTableMigration->up();
-    //    }
 
     protected function getEnvironmentSetUp($app)
     {
@@ -58,12 +43,6 @@ abstract class TestCase extends Orchestra
                 'database' => ':memory:',
                 'prefix' => '',
             ]);
-
-            // Setup queue database connections.
-            //            $config->set([
-            //                'queue.batching.database' => 'testbench',
-            //                'queue.failed.database' => 'testbench',
-            //            ]);
         });
     }
 

@@ -19,7 +19,7 @@ class ChatUserFactory extends Factory
         ];
     }
 
-    public function modelName()
+    public function modelName(): string
     {
         return ChatUser::class;
     }
