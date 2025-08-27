@@ -34,7 +34,7 @@ class Chat extends Model
 
     public function chatable(): MorphTo
     {
-        return $this->morphTo('chatable');
+        return $this->morphTo('chatable')->withTrashed();
     }
 
     public function users()
