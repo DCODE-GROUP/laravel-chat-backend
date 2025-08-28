@@ -20,6 +20,7 @@ class DCodeChatMessageSentForUser implements ShouldBroadcastNow
     public function __construct(public Chat $chat, public ChatMessage $message, protected Authorizable $user)
     {
         $this->chat->unsetRelation('messages');
+        $this->chat->unsetRelation('users');
     }
 
     public function broadcastOn(): array
@@ -34,5 +35,18 @@ class DCodeChatMessageSentForUser implements ShouldBroadcastNow
     public function broadcastAs(): string
     {
         return 'DCodeChatMessageSentForUser';
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'chat' => [
+                'id' => $this->chat->id,
+                'pivot' => [
+                    'has_new_messages' => $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages,
+                ],
+            ],
+            'message' => $this->message,
+        ];
     }
 }

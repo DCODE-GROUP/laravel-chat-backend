@@ -23,6 +23,7 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
     {
         $this->unreadChats = $user->chats()->where('has_new_messages', true)->get(); // @phpstan-ignore-line
         $this->chat->unsetRelation('messages');
+        $this->chat->unsetRelation('users');
     }
 
     public function broadcastOn(): array
@@ -44,14 +45,14 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
             'chat' => [
                 'id' => $this->chat->id,
                 'pivot' => [
-                    'has_new_messages' => $this->chat->users->firstWhere('id', $this->user->id)?->pivot->has_new_messages,
+                    'has_new_messages' => $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages,
                 ],
             ],
             'unreadChats' => $this->unreadChats->map(function (Chat $chat) {
                 return [
                     'id' => $chat->id,
                     'pivot' => [
-                        'has_new_messages' => $chat->users->firstWhere('id', $this->user->id)?->pivot->has_new_messages,
+                        'has_new_messages' => $chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages,
                     ],
                 ];
             }),
