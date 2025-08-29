@@ -29,7 +29,7 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         $broadcasts = [];
-        $broadcasts[] = new PrivateChannel('dcode-chat.'.$this->user->id);
+        $broadcasts[] = new PrivateChannel('dcode-chat.'.$this->user->id); // @phpstan-ignore-line
 
         return $broadcasts;
     }

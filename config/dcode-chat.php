@@ -57,6 +57,9 @@ return [
 
     'datetime_format' => env('DCODE_CHAT_DATETIME_FORMAT', 'j M Y H:ia'),
     'date_format' => env('DCODE_CHAT_DATE_FORMAT', 'j.m.Y'),
+    'mins_to_notify' => env('DCODE_CHAT_MINS_TO_NOTIFY', 60),
+    'notification_email_subject' => env('DCODE_CHAT_NOTIFICATION_EMAIL_SUBJECT', 'Unread Chat Messages'),
+    'notification_email_view' => env('DCODE_CHAT_NOTIFICATION_EMAIL_VIEW', 'dcode-chat::emails.unread_messages'),
 
     /*
      |--------------------------------------------------------------------------

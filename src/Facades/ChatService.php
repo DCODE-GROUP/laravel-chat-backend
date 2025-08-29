@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Illuminate\Database\Eloquent\Collection getChatsForUser(\Illuminate\Database\Eloquent\Model $user)
+ * @method static \Illuminate\Database\Eloquent\Collection getChatsForUser(\Illuminate\Database\Eloquent\Model $user, ?string $search = null)
  * @method static \Dcodegroup\DCodeChat\Models\Chat getChatById(\Illuminate\Database\Eloquent\Model $user, int $chatId)
  * @method static \Dcodegroup\DCodeChat\Models\Chat startChat(Authorizable $fromUser, ?array $toUsers = [], ?Model $forModel = null)
  */

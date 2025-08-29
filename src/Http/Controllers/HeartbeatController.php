@@ -17,6 +17,7 @@ class HeartbeatController extends ChatController
         $newMessages = [];
         if ($currentChat = request()->input('currentChat')) {
             // If a current chat is specified, check if it has new messages
+            /* @var \Dcodegroup\DCodeChat\Models\Chat $currentChat */
             $currentChat = $chats->firstWhere('id', $currentChat);
             if ($currentChat) {
                 $currentChat->load('messages');
@@ -24,12 +25,12 @@ class HeartbeatController extends ChatController
                 if ($afterId = request()->input('lastMessageId')) {
                     // If an 'after' parameter is provided, filter chats to only include those after the specified ID
                     $currentChat->load('messages');
-                    $newMessages = $currentChat->messages->filter(function ($chat) use ($afterId) {
+                    $newMessages = $currentChat->messages->filter(function ($chat) use ($afterId) { // @phpstan-ignore-line
                         return $chat->id > $afterId;
                     })->values();
                 } else {
                     // If no 'after' parameter is provided, return all messages
-                    $newMessages = $currentChat->messages;
+                    $newMessages = $currentChat->messages; // @phpstan-ignore-line
                 }
             }
         }

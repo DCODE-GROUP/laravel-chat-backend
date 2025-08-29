@@ -57,6 +57,7 @@
       "Dcodegroup\\DCodeChat\\Tests\\": "tests/",
       "Workbench\\App\\": "workbench/app/",
       "App\\": "workbench/app/",
+      "Dcodegroup\\DCodeChat\\Factories\\": "database/factories/",
       "Database\\Factories\\": "workbench/database/factories/",
       "Database\\Seeders\\": "workbench/database/seeders/"
     }

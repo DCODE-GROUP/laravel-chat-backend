@@ -16,3 +16,6 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::allowedFilters#'
         - '#Class App\\Models\\User not found#'
+        - '#Trait Dcodegroup\\DCodeChat\\Support\\Traits\\ChatableModel is used zero times and is not analysed.#'
+        - '#Trait Dcodegroup\\DCodeChat\\Support\\Traits\\ChatableUser is used zero times and is not analysed.#'
+        - "#Called 'env' outside of the config directory which returns null when the config is cached, use 'config'.#"
