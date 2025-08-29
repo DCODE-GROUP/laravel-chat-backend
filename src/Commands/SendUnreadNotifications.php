@@ -7,7 +7,6 @@ use Dcodegroup\DCodeChat\Models\ChatEmailNotification;
 use Dcodegroup\DCodeChat\Models\ChatMessage;
 use Dcodegroup\DCodeChat\Models\ChatUser;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class SendUnreadNotifications extends Command
@@ -18,7 +17,7 @@ class SendUnreadNotifications extends Command
 
     public function handle(): int
     {
-        $cutoff = Carbon::now()->subMinutes(config('dcode-chat.mins_to_notify', 60));
+        $cutoff = now()->subMinutes(config('dcode-chat.mins_to_notify', 60));
 
         $chatUsers = ChatUser::hasUnreadMessages()->has('user')->with('user')->get();
 

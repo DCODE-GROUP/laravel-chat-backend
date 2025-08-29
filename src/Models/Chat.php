@@ -15,7 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection|\Dcodegroup\DCodeChat\Models\ChatMessage[] $messages
  *
  * @method Builder byRelation(string $chatableType, string $chatableId)
- */ class Chat extends Model
+ */
+class Chat extends Model
 {
     use HasFactory;
     use HasUlids;

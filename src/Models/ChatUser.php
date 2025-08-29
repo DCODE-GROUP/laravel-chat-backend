@@ -2,6 +2,7 @@
 
 namespace Dcodegroup\DCodeChat\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -60,7 +61,7 @@ class ChatUser extends Pivot
         return $this->belongsTo(config('dcode-chat.user_model'));
     }
 
-    public function scopeHasUnreadMessages($query)
+    public function scopeHasUnreadMessages(Builder $query)
     {
         $query->whereHas('chat', function ($query) {
             $query->whereNull('deleted_at');
