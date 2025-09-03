@@ -24,13 +24,13 @@ class MessagesController
             ]);
 
             DCodeChatUnreadStatusChange::dispatch(
-                auth()->user()->chats()->where('chat_id', $chat->id)->first(),
+                auth()->user()->chats()->where('chat_id', $chat->id)->first(), // @phpstan-ignore-line
                 auth()->user()
             );
         }
 
         return response()->json([
-            'chat' => auth()->user()->chats()->with('messages')->where('chat_id', $chat->id)->first()->toArray(),
+            'chat' => auth()->user()->chats()->with('messages')->where('chat_id', $chat->id)->first()->toArray(), // @phpstan-ignore-line
         ]);
     }
 

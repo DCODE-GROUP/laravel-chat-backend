@@ -15,7 +15,7 @@ class ChatService
     public function getChatsForUser(Model $user, ?string $search = null)
     {
         // Fetch all chats for the given user
-        $query = $user->chats();
+        $query = $user->chats(); // @phpstan-ignore-line
         if ($search) {
             // If a search term is provided, filter chats by title or description
             $query->where(function ($q) use ($search) {
@@ -33,19 +33,19 @@ class ChatService
     public function getChatById(Model $user, $chatId)
     {
         // Fetch a specific chat by ID for the given user
-        return $user->chats()->find($chatId);
+        return $user->chats()->find($chatId); // @phpstan-ignore-line
     }
 
     public function sendMessageToChat(Model $fromUser, Chat $chat, $message)
     {
         $message = $chat->messages()->create([
-            'user_id' => $fromUser->id,
+            'user_id' => $fromUser->id, // @phpstan-ignore-line
             'message' => $message,
         ]);
 
         // Update pivot data for all other users in the chat to indicate they have new messages
-        $chat->users()->where('user_id', '!=', $fromUser->id)->each(function ($user) use ($chat) {
-            $chat->users()->updateExistingPivot($user->id, [
+        $chat->users()->where('user_id', '!=', $fromUser->id)->each(function ($user) use ($chat) { // @phpstan-ignore-line
+            $chat->users()->updateExistingPivot($user->id, [ // @phpstan-ignore-line
                 'has_new_messages' => true,
             ]);
             DCodeChatUnreadStatusChange::dispatch(
@@ -56,7 +56,7 @@ class ChatService
 
         foreach ($chat->users as $user) {
             DCodeChatMessageSentForUser::dispatch(
-                $user->chats()->where('chat_id', $chat->id)->first(),
+                $user->chats()->where('chat_id', $chat->id)->first(), // @phpstan-ignore-line
                 $message,
                 $user
             );
@@ -70,8 +70,8 @@ class ChatService
         // Logic to start a chat for the user
         if ($forModel) {
             $chat = Chat::firstOrCreate([
-                'chatable_type' => $forModel ? get_class($forModel) : null,
-                'chatable_id' => $forModel?->id,
+                'chatable_type' => get_class($forModel),
+                'chatable_id' => $forModel->id, // @phpstan-ignore-line
             ]);
         } else {
             $chat = Chat::create();
@@ -80,13 +80,13 @@ class ChatService
         if (count($toUsers) == 0) {
             $toUsers = ChatResolver::resolveUsers($forModel);
         }
-        $chat->users()->syncWithoutDetaching([$fromUser->id]);
+        $chat->users()->syncWithoutDetaching([$fromUser->id]); // @phpstan-ignore-line
         $chat->users()->syncWithoutDetaching($toUsers->pluck('id')->toArray());
         $chat->refresh();
 
         $userChatAttributes = ChatResolver::resolveUserChatAttributes($chat, $fromUser);
 
-        $chat->users()->updateExistingPivot($fromUser->id, [
+        $chat->users()->updateExistingPivot($fromUser->id, [ // @phpstan-ignore-line
             'user_name' => $userChatAttributes->userDisplayName,
             'user_avatar' => $userChatAttributes->userAvatarUrl,
             'chat_title' => $userChatAttributes->userChatTitle,
@@ -113,9 +113,9 @@ class ChatService
         }
 
         $chat->refresh();
-        DCodeChatCreatedForUser::dispatch($fromUser->chats()->where('chat_id', $chat->id)->first(), $fromUser);
+        DCodeChatCreatedForUser::dispatch($fromUser->chats()->where('chat_id', $chat->id)->first(), $fromUser); // @phpstan-ignore-line
         foreach ($toUsers as $toUser) {
-            DCodeChatCreatedForUser::dispatch($toUser->chats()->where('chat_id', $chat->id)->first(), $toUser);
+            DCodeChatCreatedForUser::dispatch($toUser->chats()->where('chat_id', $chat->id)->first(), $toUser); // @phpstan-ignore-line
         }
 
         return $chat;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Dcodegroup\DCodeChat\Factories;
 
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,5 +17,10 @@ class ChatFactory extends Factory
             'chatable_type' => fake()->randomElement(['Transport::class', 'Client::class']),
             'open' => true,
         ];
+    }
+
+    public function modelName(): string
+    {
+        return Chat::class;
     }
 }

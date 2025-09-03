@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Dcodegroup\DCodeChat\Factories;
 
 use Dcodegroup\DCodeChat\Models\Chat;
 use Dcodegroup\DCodeChat\Models\ChatMessage;
@@ -18,5 +18,10 @@ class ChatMessageFactory extends Factory
             'message' => fake()->sentence(),
             'user_id' => config('dcode-chat.user_model')::factory(),
         ];
+    }
+
+    public function modelName(): string
+    {
+        return ChatMessage::class;
     }
 }

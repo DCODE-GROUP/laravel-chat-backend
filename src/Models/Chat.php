@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property \Illuminate\Database\Eloquent\Collection|\Dcodegroup\DCodeChat\Models\ChatMessage[] $messages
+ *
  * @method Builder byRelation(string $chatableType, string $chatableId)
  */
 class Chat extends Model
