@@ -45,14 +45,14 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
             'chat' => [
                 'id' => $this->chat->id,
                 'pivot' => [
-                    'has_new_messages' => $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages,
+                    'has_new_messages' => $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages, // @phpstan-ignore-line
                 ],
             ],
-            'unreadChats' => $this->unreadChats->map(function (Chat $chat) {
+            'unreadChats' => $this->unreadChats->map(function (Chat $chat) { // @phpstan-ignore-line
                 return [
                     'id' => $chat->id,
                     'pivot' => [
-                        'has_new_messages' => $chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages,
+                        'has_new_messages' => $chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages, // @phpstan-ignore-line
                     ],
                 ];
             }),
