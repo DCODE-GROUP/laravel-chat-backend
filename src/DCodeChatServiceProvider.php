@@ -39,7 +39,6 @@ class DCodeChatServiceProvider extends ServiceProvider
     protected function offerPublishing(): void
     {
         $this->setupMigrations();
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([__DIR__.'/../config/dcode-chat.php' => config_path('dcode-chat.php')], 'dcode-chat-config');
         $this->publishes([__DIR__.'/../lang' => $this->app->langPath()], 'dcode-chat-translations');
     }
