@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property string $chatable_type
+ * @property string $chatable_id
+ * @property bool $open
+ * @property string|null $created_by
+ * @property string|null $updated_by
  * @property \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
  * @property \Illuminate\Database\Eloquent\Collection|\Dcodegroup\DCodeChat\Models\ChatMessage[] $messages
  *

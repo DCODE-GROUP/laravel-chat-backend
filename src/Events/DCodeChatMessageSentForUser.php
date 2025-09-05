@@ -39,12 +39,14 @@ class DCodeChatMessageSentForUser implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
+        $chatUser = $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot; // @phpstan-ignore-line
+
         return [
             'chat' => [
                 'id' => $this->chat->id,
-                'pivot' => [
-                    'has_new_messages' => $this->chat->users()->firstWhere('users.id', $this->user->id)?->pivot->has_new_messages, // @phpstan-ignore-line
-                ],
+                'chatable_id' => $this->chat->chatable_id,
+                'chatable_type' => $this->chat->chatable_type,
+                'pivot' => $chatUser,
             ],
             'message' => $this->message,
         ];
