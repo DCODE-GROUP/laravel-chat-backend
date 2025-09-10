@@ -50,10 +50,9 @@ class DCodeChatUnreadStatusChange implements ShouldBroadcastNow
                 'chatable_type' => $this->chat->chatable_type,
                 'pivot' => $chatUser,
             ],
-            'unreadChats' => $this->unreadChats->map(function (Chat $chat) use ($chatUser) { // @phpstan-ignore-line
+            'unreadChats' => $this->unreadChats->map(function (Chat $chat) { // @phpstan-ignore-line
                 return [
                     'id' => $chat->id,
-                    'pivot' => $chatUser,
                 ];
             }),
         ];
