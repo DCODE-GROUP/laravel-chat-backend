@@ -31,6 +31,12 @@ abstract class TestCase extends Orchestra
 
             return 'Database\\Factories\\'.class_basename($modelName).'Factory';
         });
+
+        // Publish migrations
+        $this->artisan('vendor:publish', [
+            '--tag' => 'dcode-chat-migrations',
+            '--force' => true,
+        ])->run();
     }
 
     protected function getEnvironmentSetUp($app)

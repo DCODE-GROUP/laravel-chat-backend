@@ -33,6 +33,11 @@ class SendUnreadNotifications extends Command
                 continue;
             }
 
+            if ($notification->last_message_at > $user->last_login_at) {
+                // User has already been notified about the latest message since their last login
+                continue;
+            }
+
             // Gather unread messages across all relevant chats
             $unreadMessages = ChatMessage::whereIn('chat_id', $userChats->pluck('chat_id'))
                 ->with('chat')

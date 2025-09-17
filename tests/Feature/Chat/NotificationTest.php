@@ -104,3 +104,44 @@ it('does not send duplicate emails for the same message batch', function () {
 
     Mail::assertNothingSent();
 });
+
+test('it does not send a second email if the user has not logged in since the last email', function () {
+    Mail::fake();
+    $user = User::factory()->create([
+        'last_login_at' => now()->subHours(3),
+    ]);
+
+    $chat = Chat::factory()->create();
+    ChatUser::factory()->create([
+        'user_id' => $user->id,
+        'chat_id' => $chat->id,
+        'last_read_at' => now()->subHours(4),
+        'has_new_messages' => true,
+    ]);
+
+    $sender = User::factory()->create();
+
+    $message1 = ChatMessage::factory()->create([
+        'chat_id' => $chat->id,
+        'user_id' => $sender->id,
+        'created_at' => now()->subHours(2),
+    ]);
+
+    ChatEmailNotification::create([
+        'user_id' => $user->id,
+        'last_message_at' => $message1->created_at,
+        'last_notified_at' => now()->subHours(1),
+    ]);
+
+    // Create a new message after the last notification
+    ChatMessage::factory()->create([
+        'chat_id' => $chat->id,
+        'user_id' => $sender->id,
+        'created_at' => now()->subMinutes(30),
+    ]);
+
+    artisan('chat:send-unread-notifications')
+        ->assertSuccessful();
+
+    Mail::assertNothingQueued();
+});

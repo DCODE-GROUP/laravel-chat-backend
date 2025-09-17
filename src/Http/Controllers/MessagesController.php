@@ -3,6 +3,7 @@
 namespace Dcodegroup\DCodeChat\Http\Controllers;
 
 use Dcodegroup\DCodeChat\Events\DCodeChatUnreadStatusChange;
+use Dcodegroup\DCodeChat\Events\DCodeMarkRead;
 use Dcodegroup\DCodeChat\Facades\ChatService;
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ class MessagesController
                 'has_new_messages' => false,
                 'last_read_at' => now(),
             ]);
+
+            DCodeMarkRead::dispatch(auth()->user(), $chat);
 
             DCodeChatUnreadStatusChange::dispatch(
                 auth()->user()->chats()->where('chat_id', $chat->id)->first(), // @phpstan-ignore-line
