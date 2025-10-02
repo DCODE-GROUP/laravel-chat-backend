@@ -23,9 +23,8 @@ class UnreadMessageSummary extends Mailable
     public function build()
     {
         return $this->subject(config('dcode-chat.notification_email_subject', 'Unread Chat Messages'))
-            ->view(config('dcode-chat.notification_email_view', 'dcode-chat::emails.unread_messages'), [
-                'messages' => $this->messages,
-                'user' => $this->user,
-            ]);
+            ->markdown(config('dcode-chat.notification_email_view', 'dcode-chat::emails.unread_messages'))
+            ->with('messages', $this->messages)
+            ->with('user', $this->user);
     }
 }

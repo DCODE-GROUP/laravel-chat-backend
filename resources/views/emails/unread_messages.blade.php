@@ -6,12 +6,12 @@ You have **{{ $messages->count() }} unread message{{ $messages->count() > 1 ? 's
 
 <ul>
 @foreach($messages->groupBy('chat_id') as $chatId => $msgs)
-    <li>{{ $msgs->first()->chat->users->firstWhere('user_id', $user->id)?->chat_title ?? 'Chat ID: ' . $chatId }}</li>
+<li>{{ $msgs->first()->chat->users->firstWhere('user_id', $user->id)?->chat_title ?? 'Chat ID: ' . $chatId }}</li>
 @endforeach
 </ul>
 
 <a href="{{ route('dcode-chat.chat.index') }}" style="color: #3490dc; text-decoration: none;">
-    View Messages
+View Messages
 </a>
 
 Thanks!<br>
