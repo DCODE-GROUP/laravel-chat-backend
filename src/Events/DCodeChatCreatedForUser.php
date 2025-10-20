@@ -33,4 +33,9 @@ class DCodeChatCreatedForUser implements ShouldBroadcastNow
     {
         return 'DCodeChatCreatedForUser';
     }
+
+    public function getUser(): Authorizable
+    {
+        return $this->user;
+    }
 }
