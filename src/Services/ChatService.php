@@ -6,6 +6,7 @@ use Dcodegroup\DCodeChat\Events\DCodeChatCreatedForUser;
 use Dcodegroup\DCodeChat\Events\DCodeChatMessageSentForUser;
 use Dcodegroup\DCodeChat\Events\DCodeChatUnreadStatusChange;
 use Dcodegroup\DCodeChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\ChatUser;
 use Dcodegroup\DCodeChat\Support\ChatResolver;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,10 @@ class ChatService
         if ($search) {
             // If a search term is provided, filter chats by title or description
             $query->where(function ($q) use ($search) {
-                $q->where('chat_title', 'like', '%'.$search.'%')
-                    ->orWhere('chat_description', 'like', '%'.$search.'%')
+                $q->where('chat_title', 'like', '%' . $search . '%')
+                    ->orWhere('chat_description', 'like', '%' . $search . '%')
                     ->orWhereHas('messages', function ($q) use ($search) {
-                        $q->where('message', 'like', '%'.$search.'%');
+                        $q->where('message', 'like', '%' . $search . '%');
                     });
             });
         }
@@ -65,21 +66,49 @@ class ChatService
         return $message;
     }
 
+    public function findChat(Authorizable $fromUser, ?array $toUsers = [], ?Model $forModel = null): ?Chat
+    {
+        $query = ChatUser::query()->join('chats', 'chats.id', '=', 'chat_users.chat_id');
+
+        if ($forModel) {
+            $query->where('chats.chatable_type', get_class($forModel))
+                ->where('chats.chatable_id', $forModel->id); // @phpstan-ignore-line
+        } else {
+            $query->whereNull('chats.chatable_type')
+                ->whereNull('chats.chatable_id');
+        }
+
+        $chatId = $query->whereIn('chat_users.user_id', [$fromUser->id, ...$toUsers])   // must involve these users
+            ->groupBy('chat_users.chat_id')
+            ->havingRaw('COUNT(DISTINCT chat_users.user_id) = ' . (count($toUsers) + 1))          // and *only* these users
+            ->value('chat_users.chat_id');                                 // get the matching chat_id (or null)
+
+        if ($chatId) {
+            return Chat::find($chatId);
+        }
+        return null;
+    }
+
+
     public function startChat(Authorizable $fromUser, ?array $toUsers = [], ?Model $forModel = null)
     {
         // Logic to start a chat for the user
+        if (count($toUsers) == 0) {
+            $toUsers = ChatResolver::resolveUsers($forModel);
+        } else {
+            $toUsers = collect($toUsers);
+        }
+
         if ($forModel) {
             $chat = Chat::firstOrCreate([
                 'chatable_type' => get_class($forModel),
                 'chatable_id' => $forModel->id, // @phpstan-ignore-line
             ]);
         } else {
-            $chat = Chat::create();
+            // Check if a chat already exists between these users
+            $chat = $this->findChat($fromUser, $toUsers->pluck('id')->toArray()) ?: Chat::create();
         }
 
-        if (count($toUsers) == 0) {
-            $toUsers = ChatResolver::resolveUsers($forModel);
-        }
         $chat->users()->syncWithoutDetaching([$fromUser->id]); // @phpstan-ignore-line
         $chat->users()->syncWithoutDetaching($toUsers->pluck('id')->toArray());
         $chat->refresh();
