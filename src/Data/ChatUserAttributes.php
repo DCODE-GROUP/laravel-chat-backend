@@ -2,9 +2,9 @@
 
 namespace Dcodegroup\DCodeChat\Data;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Spatie\LaravelData\Data;
 
-class ChatUserAttributes extends DataTransferObject
+class ChatUserAttributes extends Data
 {
     public function __construct(
         public string $userDisplayName,
