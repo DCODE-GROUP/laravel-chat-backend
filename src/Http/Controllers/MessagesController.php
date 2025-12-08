@@ -55,11 +55,11 @@ class MessagesController
     public function update(Request $request, int $messageId)
     {
         $message = ChatMessage::findOrFail($messageId);
-        $message->content = $request->input('message');
+        $message->message = $request->input('message');
         $message->save();
 
         return response()->json([
-            'message' => $message->content,
+            'message' => $message->message,
         ]);
     }
 
