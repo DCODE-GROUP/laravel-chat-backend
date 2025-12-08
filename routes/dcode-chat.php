@@ -23,10 +23,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post(config('dcode-chat.route_path').'/{chat}/messages', [MessagesController::class, 'store'])
         ->name(config('dcode-chat.route_name').'.messages.store');
 
-    Route::put(config('dcode-chat.route_path').'/{message}', [MessagesController::class, 'update'])
+    Route::put(config('dcode-chat.route_path').'/{id}', [MessagesController::class, 'update'])
         ->name(config('dcode-chat.route_name').'.messages.update');
 
-    Route::delete(config('dcode-chat.route_path').'/{message}', [MessagesController::class, 'destroy'])
+    Route::delete(config('dcode-chat.route_path').'/{id}', [MessagesController::class, 'destroy'])
         ->name(config('dcode-chat.route_name').'.messages.destroy');
 
     Route::get(config('dcode-chat.route_path').'/heartbeat', HeartbeatController::class)->name(config('dcode-chat.route_name').'.heartbeat');

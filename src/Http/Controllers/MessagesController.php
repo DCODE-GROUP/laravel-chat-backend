@@ -52,8 +52,9 @@ class MessagesController
         ], 201);
     }
 
-    public function update(Request $request, ChatMessage $message)
+    public function update(Request $request, int $messageId)
     {
+        $message = ChatMessage::findOrFail($messageId);
         $message->content = $request->input('message');
         $message->save();
 
@@ -62,8 +63,9 @@ class MessagesController
         ]);
     }
 
-    public function destroy(ChatMessage $message)
+    public function destroy(int $messageId)
     {
+        $message = ChatMessage::findOrFail($messageId);
         $message->delete();
 
         return response()->json([], 204);
