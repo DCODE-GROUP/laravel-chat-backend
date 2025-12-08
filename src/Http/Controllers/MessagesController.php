@@ -6,6 +6,7 @@ use Dcodegroup\DCodeChat\Events\DCodeChatUnreadStatusChange;
 use Dcodegroup\DCodeChat\Events\DCodeMarkRead;
 use Dcodegroup\DCodeChat\Facades\ChatService;
 use Dcodegroup\DCodeChat\Models\Chat;
+use Dcodegroup\DCodeChat\Models\ChatMessage;
 use Illuminate\Http\Request;
 
 class MessagesController
@@ -49,5 +50,22 @@ class MessagesController
         return response()->json([
             'message' => $chatMessage,
         ], 201);
+    }
+
+    public function update(Request $request, ChatMessage $message)
+    {
+        $message->content = $request->input('message');
+        $message->save();
+
+        return response()->json([
+            'message' => $message->content,
+        ]);
+    }
+
+    public function destroy(ChatMessage $message)
+    {
+        $message->delete();
+
+        return response()->json([], 204);
     }
 }
