@@ -81,7 +81,7 @@ class ChatService
         $chatId = $query->whereIn('chat_users.user_id', [$fromUser->id, ...$toUsers])   // @phpstan-ignore-line
             ->groupBy('chat_users.chat_id')
             ->havingRaw('COUNT(DISTINCT chat_users.user_id) = '.(count($toUsers) + 1))          // and *only* these users
-            ->value('chat_users.chat_id');                                 // get the matching chat_id (or null)
+            ->value('chat_users.chat_id'); // @phpstan-ignore-line
 
         if ($chatId) {
             return Chat::find($chatId);
