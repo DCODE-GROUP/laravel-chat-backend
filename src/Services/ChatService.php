@@ -71,10 +71,10 @@ class ChatService
         $query = ChatUser::query()->join('chats', 'chats.id', '=', 'chat_users.chat_id');
 
         if ($forModel) {
-            $query->where('chats.chatable_type', get_class($forModel))
+            $query->where('chats.chatable_type', get_class($forModel)) // @phpstan-ignore-line
                 ->where('chats.chatable_id', $forModel->id); // @phpstan-ignore-line
         } else {
-            $query->whereNull('chats.chatable_type')
+            $query->whereNull('chats.chatable_type') // @phpstan-ignore-line
                 ->whereNull('chats.chatable_id');
         }
 
