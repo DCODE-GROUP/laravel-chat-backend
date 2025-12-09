@@ -52,7 +52,7 @@ class MessagesController
         ], 201);
     }
 
-    public function update(Request $request, int $messageId)
+    public function update(Request $request, string $messageId)
     {
         $message = ChatMessage::findOrFail($messageId);
         $message->message = $request->input('message');
@@ -63,7 +63,7 @@ class MessagesController
         ]);
     }
 
-    public function destroy(int $messageId)
+    public function destroy(string $messageId)
     {
         $message = ChatMessage::findOrFail($messageId);
         $message->delete();
