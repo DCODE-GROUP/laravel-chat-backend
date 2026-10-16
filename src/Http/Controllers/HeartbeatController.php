@@ -3,13 +3,14 @@
 namespace Dcodegroup\DCodeChat\Http\Controllers;
 
 use Dcodegroup\DCodeChat\Facades\ChatService;
+use Illuminate\Http\JsonResponse;
 
 class HeartbeatController extends ChatController
 {
     /**
      * Handle the heartbeat request.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function __invoke()
     {

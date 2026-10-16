@@ -3,13 +3,14 @@
 namespace Dcodegroup\DCodeChat\Support\Traits;
 
 use Dcodegroup\DCodeChat\Models\ChatUser;
+use Illuminate\Database\Eloquent\Collection;
 
 trait ChatableUser
 {
     /**
      * Get the chats for the user.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function chats()
     {
@@ -35,7 +36,7 @@ trait ChatableUser
     /**
      * Get the messages for the user.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function messages()
     {

@@ -8,17 +8,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $chat_id
  * @property string $message
  * @property string $user_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Dcodegroup\DCodeChat\Models\ChatUser|null $user_attributes
- * @property-read \Dcodegroup\DCodeChat\Models\Chat $chat
- * @property-read \Illuminate\Foundation\Auth\User $user
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read ChatUser|null $user_attributes
+ * @property-read Chat $chat
+ * @property-read User $user
  */
 class ChatMessage extends Model
 {

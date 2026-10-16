@@ -4,12 +4,13 @@ namespace Dcodegroup\DCodeChat\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $user_id
- * @property \Illuminate\Support\Carbon|null $last_notified_at
- * @property \Illuminate\Support\Carbon|null $last_seen_at
- * @property \Illuminate\Support\Carbon|null $last_message_at
+ * @property Carbon|null $last_notified_at
+ * @property Carbon|null $last_seen_at
+ * @property Carbon|null $last_message_at
  */
 class ChatEmailNotification extends Model
 {

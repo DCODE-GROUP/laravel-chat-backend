@@ -3,6 +3,7 @@
 use App\Models\User;
 use Dcodegroup\DCodeChat\Data\ChatUserAttributes;
 use Dcodegroup\DCodeChat\Models\Chat;
+use Dcodegroup\DCodeChat\Services\ChatService;
 use Dcodegroup\DCodeChat\Support\ChatResolver;
 use Illuminate\Support\Facades\Mail;
 
@@ -27,7 +28,7 @@ it('can initiate a direct chat between users', function () {
         );
     });
 
-    $chatService = new \Dcodegroup\DCodeChat\Services\ChatService;
+    $chatService = new ChatService;
     $chat = $chatService->startChat($fromUser, [$toUser]);
 
     expect($chat)->toBeInstanceOf(Chat::class);
@@ -39,7 +40,7 @@ it('does not initiate duplicate chats between the same users', function () {
     $fromUser = User::factory()->create();
     $toUser = User::factory()->create();
 
-    $chatService = new \Dcodegroup\DCodeChat\Services\ChatService;
+    $chatService = new ChatService;
     $chat1 = $chatService->startChat($fromUser, [$toUser]);
     $chat2 = $chatService->startChat($fromUser, [$toUser]);
 
