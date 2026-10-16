@@ -2,8 +2,10 @@
 
 namespace Dcodegroup\DCodeChat\Models;
 
+use App\Models\User;
 use Dcodegroup\DCodeChat\Support\Traits\LastModifiedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property bool $open
  * @property string|null $created_by
  * @property string|null $updated_by
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
- * @property \Illuminate\Database\Eloquent\Collection|\Dcodegroup\DCodeChat\Models\ChatMessage[] $messages
+ * @property Collection|User[] $users
+ * @property Collection|ChatMessage[] $messages
  *
  * @method Builder byRelation(string $chatableType, string $chatableId)
  */

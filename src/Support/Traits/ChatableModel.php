@@ -4,13 +4,14 @@ namespace Dcodegroup\DCodeChat\Support\Traits;
 
 use Dcodegroup\DCodeChat\Models\Chat;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait ChatableModel
 {
     /**
      * Get the chat associated with the model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return MorphOne
      */
     public function chat()
     {
